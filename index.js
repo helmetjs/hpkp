@@ -1,14 +1,14 @@
 var arrayWrap = require('arraywrap');
 
-var badArgumentsError = new Error('hkpk must be called with a maxAge and at least one sha256.');
+var badArgumentsError = new Error('hpkp must be called with a maxAge and at least one sha256.');
 
-module.exports = function hkpk(passedOptions) {
+module.exports = function hpkp(passedOptions) {
 
   var options = parseOptions(passedOptions);
   var headerKey = getHeaderKey(options);
   var headerValue = getHeaderValue(options);
 
-  return function hkpk(req, res, next) {
+  return function hpkp(req, res, next) {
     res.setHeader(headerKey, headerValue);
     next();
   };

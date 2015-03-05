@@ -1,16 +1,16 @@
-var hkpk = require('..');
+var hpkp = require('..');
 
 var connect = require('connect');
 var request = require('supertest');
 var assert = require('assert');
 
-describe('hkpk', function () {
+describe('hpkp', function () {
 
   describe('with proper input', function () {
 
     function test() {
       var app = connect();
-      app.use(hkpk.apply(null, arguments));
+      app.use(hpkp.apply(null, arguments));
       app.use(function (req, res) {
         res.end('Hello world!');
       });
@@ -80,8 +80,8 @@ describe('hkpk', function () {
   });
 
   it('names its function and middleware', function () {
-    assert.equal(hkpk.name, 'hkpk');
-    assert.equal(hkpk.name, hkpk({ maxAge: 10000, sha256: 'abc123' }).name);
+    assert.equal(hpkp.name, 'hpkp');
+    assert.equal(hpkp.name, hpkp({ maxAge: 10000, sha256: 'abc123' }).name);
   });
 
   describe('with improper input', function () {
@@ -89,7 +89,7 @@ describe('hkpk', function () {
     function callWith() {
       var args = arguments;
       return function () {
-        return hkpk.apply(this, args);
+        return hpkp.apply(this, args);
       };
     }
 

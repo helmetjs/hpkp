@@ -1,10 +1,10 @@
 {
-  "name": "hkpk",
+  "name": "hpkp",
   "author": "Adam Baldwin <baldwin@andyet.net> (http://andyet.net/team/baldwin)",
   "contributors": [
     "Evan Hahn <me@evanhahn.com> (http://evanhahn.com)"
   ],
-  "description": "HTTP Public Key Pinning (HKPK) middleware",
+  "description": "HTTP Public Key Pinning (HPKP) middleware",
   "version": "0.0.0",
   "keywords": [
     "helmet",
@@ -18,9 +18,9 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/helmetjs/hkpk.git"
+    "url": "git://github.com/helmetjs/hpkp.git"
   },
-  "bugs": "https://github.com/helmetjs/hkpk/issues",
+  "bugs": "https://github.com/helmetjs/hpkp/issues",
   "scripts": {
     "test": "mocha"
   },
