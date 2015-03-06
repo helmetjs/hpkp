@@ -1,6 +1,7 @@
 {
   "name": "hpkp",
   "author": "Adam Baldwin <baldwin@andyet.net> (http://andyet.net/team/baldwin)",
+  "license": "MIT",
   "contributors": [
     "Evan Hahn <me@evanhahn.com> (http://evanhahn.com)"
   ],
