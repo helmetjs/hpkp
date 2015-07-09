@@ -82,16 +82,13 @@ describe('hpkp', function () {
 
     it('fails if called with less than 2 SHAs', function () {
       [
-        { maxAge: 10000 },
-        { maxAge: 10000 , sha256s:  'abc123'},
-        { maxAge: 10000 , sha256s:  []},
-        { maxAge: 10000 , sha256s:  ['abc123']},
-        { maxage: 10000 },
-        { maxage: 10000 , sha256s:  'abc123'},
-        { maxage: 10000 , sha256s:  []},
-        { maxage: 10000 , sha256s:  ['abc123']},
+        undefined,
+        null,
+        'abc123',
+        [],
+        ['abc123']
       ].forEach(function (value) {
-        assert.throws(callWith(value));
+        assert.throws(callWith({ maxAge: 10000, sha256s: value }));
       });
     });
 
