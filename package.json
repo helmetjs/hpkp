@@ -30,8 +30,5 @@
     "connect": "^3.3.4",
     "mocha": "^2.1.0",
     "supertest": "^0.15.0"
-  },
-  "dependencies": {
-    "arraywrap": "^0.1.0"
   }
 }

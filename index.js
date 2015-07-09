@@ -1,9 +1,6 @@
-var arrayWrap = require('arraywrap');
-
-var badArgumentsError = new Error('hpkp must be called with a maxAge and at least two sha256 (one actually used and another kept as a backup).');
+var badArgumentsError = new Error('hpkp must be called with a maxAge and at least two SHA-256s (one actually used and another kept as a backup).');
 
 module.exports = function hpkp(passedOptions) {
-
   var options = parseOptions(passedOptions);
   var headerKey = getHeaderKey(options);
   var headerValue = getHeaderValue(options);
@@ -12,20 +9,18 @@ module.exports = function hpkp(passedOptions) {
     res.setHeader(headerKey, headerValue);
     next();
   };
-
 };
 
 function parseOptions(options) {
-  if ((!options) ||
-      (options.maxage && options.maxAge) ) {
-    throw badArgumentsError;
-  }
+  if (!options) { throw badArgumentsError; }
+
+  if (options.maxage && options.maxAge) { throw badArgumentsError; }
 
   var maxAge = options.maxAge || options.maxage;
-  var sha256s = arrayWrap(options.sha256s);
-  if (!maxAge || (sha256s.length < 2) || (maxAge <= 0)) {
-    throw badArgumentsError;
-  }
+  var sha256s = options.sha256s;
+
+  if (!maxAge || (maxAge <= 0)) { throw badArgumentsError; }
+  if (!sha256s || (sha256s.length < 2)) { throw badArgumentsError; }
 
   return {
     maxAge: maxAge,
