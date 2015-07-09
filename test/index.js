@@ -77,7 +77,7 @@ describe('hpkp', function () {
     });
 
     it('fails if called without a max-age', function () {
-      assert.throws(callWith({ sha256s:  ['abc123', 'xyz456'] }));
+      assert.throws(callWith({ sha256s: ['abc123', 'xyz456'] }));
     });
 
     it('fails if called with less than 2 SHAs', function () {
