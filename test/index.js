@@ -80,7 +80,7 @@ describe('hpkp', function () {
       assert.throws(callWith({ sha256s: ['abc123', 'xyz456'] }));
     });
 
-    it('fails if called with less than 2 SHAs', function () {
+    it('fails if called with fewer than 2 SHAs', function () {
       [
         undefined,
         null,
