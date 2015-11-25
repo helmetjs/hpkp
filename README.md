@@ -19,4 +19,4 @@ app.use(hpkp({
 }));
 ```
 
-Specifying a `report-uri` changes the header from `Public-Key-Pins` to `Public-Key-Pins-Report-Only`.
+Specifying a `report-uri` changes the header from `Public-Key-Pins` to `Public-Key-Pins-Report-Only`. To reverse this, set another option: `reportOnly: false`. This behavior will change in the 1.0 release.

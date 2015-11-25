@@ -37,6 +37,16 @@ describe('hpkp', function () {
       .expect('Public-Key-Pins-Report-Only', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; report-uri="http://example.com"', done);
     });
 
+    it('can disable Report-Only with a report URI', function (done) {
+      test({
+        maxage: 10000,
+        sha256s: ['abc123', 'xyz456'],
+        reportUri: 'http://example.com',
+        reportOnly: false
+      })
+      .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; report-uri="http://example.com"', done);
+    });
+
     it('changes the header when using a report URI and includes subdomains', function (done) {
       test({ maxage: 10000, sha256s: ['abc123', 'xyz456'], reportUri: 'http://example.com', includeSubdomains: true })
       .expect('Public-Key-Pins-Report-Only', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; includeSubdomains; report-uri="http://example.com"', done);
@@ -102,6 +112,14 @@ describe('hpkp', function () {
 
     it('fails if called with both types of maxAge argument', function () {
       assert.throws(callWith({ maxAge: 1000, maxage: 1000, sha256s: ['abc123', 'xyz456'] }));
+    });
+
+    it('fails if called with reportOnly: true but no reportUri', function () {
+      assert.throws(callWith({
+        maxage: 10000,
+        sha256s: ['abc123', 'xyz456'],
+        reportOnly: true
+      }));
     });
 
   });

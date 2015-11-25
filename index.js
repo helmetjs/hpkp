@@ -22,17 +22,27 @@ function parseOptions(options) {
   if (!maxAge || maxAge <= 0) { throw badArgumentsError; }
   if (!sha256s || sha256s.length < 2) { throw badArgumentsError; }
 
+  var reportOnly;
+  if (options.reportOnly === undefined) {
+    reportOnly = Boolean(options.reportUri);
+  } else {
+    reportOnly = options.reportOnly;
+  }
+
+  if (reportOnly && !options.reportUri) { throw badArgumentsError; }
+
   return {
     maxAge: maxAge,
     sha256s: sha256s,
     includeSubdomains: options.includeSubdomains,
-    reportUri: options.reportUri
+    reportUri: options.reportUri,
+    reportOnly: reportOnly
   };
 }
 
 function getHeaderKey(options) {
   var header = 'Public-Key-Pins';
-  if (options.reportUri) {
+  if (options.reportOnly) {
     header += '-Report-Only';
   }
   return header;
