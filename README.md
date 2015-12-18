@@ -8,19 +8,19 @@ Adds Public Key Pinning headers to Express/Connect applications. To learn more a
 Usage:
 
 ```js
-var express = require('express');
-var hpkp = require('hpkp');
+var express = require('express')
+var hpkp = require('hpkp')
 
-var app = express();
+var app = express()
 
-var ninetyDaysInMilliseconds = 7776000000;
+var ninetyDaysInMilliseconds = 7776000000
 app.use(hpkp({
   maxAge: ninetyDaysInMilliseconds,
   sha256s: ['AbCdEf123=', 'ZyXwVu456='],
   includeSubdomains: true,         // optional
   reportUri: 'http://example.com'  // optional
   reportOnly: false                // optional
-}));
+}))
 ```
 
 Setting `reportOnly` to `true` will change the header from `Public-Key-Pins` to `Public-Key-Pins-Report-Only`.
