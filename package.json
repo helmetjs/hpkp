@@ -24,11 +24,19 @@
   },
   "bugs": "https://github.com/helmetjs/hpkp/issues",
   "scripts": {
-    "test": "mocha"
+    "test": "standard && mocha"
   },
   "devDependencies": {
     "connect": "^3.4.0",
     "mocha": "^2.3.4",
+    "standard": "^5.4.1",
     "supertest": "^1.1.0"
+  },
+  "standard": {
+    "global": [
+      "beforeEach",
+      "describe",
+      "it"
+    ]
   }
 }
