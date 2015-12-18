@@ -20,24 +20,19 @@ describe('hpkp', function () {
         .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10', done)
     })
 
-    it('allows lowercase "maxage"', function (done) {
-      test({ maxage: 10000, sha256s: ['abc123', 'xyz456'] })
-        .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10', done)
-    })
-
     it('can include subdomains', function (done) {
-      test({ maxage: 10000, sha256s: ['abc123', 'xyz456'], includeSubdomains: true })
+      test({ maxAge: 10000, sha256s: ['abc123', 'xyz456'], includeSubdomains: true })
         .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; includeSubdomains', done)
     })
 
     it('changes the header when using a report URI', function (done) {
-      test({ maxage: 10000, sha256s: ['abc123', 'xyz456'], reportUri: 'http://example.com' })
+      test({ maxAge: 10000, sha256s: ['abc123', 'xyz456'], reportUri: 'http://example.com' })
         .expect('Public-Key-Pins-Report-Only', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; report-uri="http://example.com"', done)
     })
 
     it('can disable Report-Only with a report URI', function (done) {
       test({
-        maxage: 10000,
+        maxAge: 10000,
         sha256s: ['abc123', 'xyz456'],
         reportUri: 'http://example.com',
         reportOnly: false
@@ -46,7 +41,7 @@ describe('hpkp', function () {
     })
 
     it('changes the header when using a report URI and includes subdomains', function (done) {
-      test({ maxage: 10000, sha256s: ['abc123', 'xyz456'], reportUri: 'http://example.com', includeSubdomains: true })
+      test({ maxAge: 10000, sha256s: ['abc123', 'xyz456'], reportUri: 'http://example.com', includeSubdomains: true })
         .expect('Public-Key-Pins-Report-Only', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; includeSubdomains; report-uri="http://example.com"', done)
     })
 
@@ -86,6 +81,13 @@ describe('hpkp', function () {
       assert.throws(callWith({ sha256s: ['abc123', 'xyz456'] }))
     })
 
+    it('fails if called with a lowercase "maxage" option', function () {
+      assert.throws(callWith({
+        maxage: 10000,
+        sha256s: ['abc123', 'xyz456']
+      }))
+    })
+
     it('fails if called with fewer than 2 SHAs', function () {
       [
         undefined,
@@ -112,7 +114,7 @@ describe('hpkp', function () {
 
     it('fails if called with reportOnly: true but no reportUri', function () {
       assert.throws(callWith({
-        maxage: 10000,
+        maxAge: 10000,
         sha256s: ['abc123', 'xyz456'],
         reportOnly: true
       }))

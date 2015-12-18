@@ -16,7 +16,7 @@ function parseOptions (options) {
 
   if (options.maxage && options.maxAge) { throw badArgumentsError }
 
-  var maxAge = options.maxAge || options.maxage
+  var maxAge = options.maxAge
   var sha256s = options.sha256s
 
   if (!maxAge || maxAge <= 0) { throw badArgumentsError }
