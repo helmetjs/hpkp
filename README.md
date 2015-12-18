@@ -18,7 +18,8 @@ app.use(hpkp({
   sha256s: ['AbCdEf123=', 'ZyXwVu456='],
   includeSubdomains: true,         // optional
   reportUri: 'http://example.com'  // optional
+  reportOnly: false                // optional
 }));
 ```
 
-Specifying a `report-uri` changes the header from `Public-Key-Pins` to `Public-Key-Pins-Report-Only`. To reverse this, set another option: `reportOnly: false`. This behavior will change in the 1.0 release.
+Setting `reportOnly` to `true` will change the header from `Public-Key-Pins` to `Public-Key-Pins-Report-Only`.

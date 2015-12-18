@@ -25,24 +25,33 @@ describe('hpkp', function () {
         .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; includeSubdomains', done)
     })
 
-    it('changes the header when using a report URI', function (done) {
-      test({ maxAge: 10000, sha256s: ['abc123', 'xyz456'], reportUri: 'http://example.com' })
-        .expect('Public-Key-Pins-Report-Only', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; report-uri="http://example.com"', done)
-    })
-
-    it('can disable Report-Only with a report URI', function (done) {
+    it('can set a report-uri', function (done) {
       test({
         maxAge: 10000,
         sha256s: ['abc123', 'xyz456'],
-        reportUri: 'http://example.com',
-        reportOnly: false
+        reportUri: 'http://example.com'
       })
         .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; report-uri="http://example.com"', done)
     })
 
-    it('changes the header when using a report URI and includes subdomains', function (done) {
-      test({ maxAge: 10000, sha256s: ['abc123', 'xyz456'], reportUri: 'http://example.com', includeSubdomains: true })
-        .expect('Public-Key-Pins-Report-Only', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; includeSubdomains; report-uri="http://example.com"', done)
+    it('can enable Report-Only header', function (done) {
+      test({
+        maxAge: 10000,
+        sha256s: ['abc123', 'xyz456'],
+        reportUri: 'http://example.com',
+        reportOnly: true
+      })
+        .expect('Public-Key-Pins-Report-Only', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; report-uri="http://example.com"', done)
+    })
+
+    it('can use a report URI and include subdomains', function (done) {
+      test({
+        maxAge: 10000,
+        sha256s: ['abc123', 'xyz456'],
+        reportUri: 'http://example.com',
+        includeSubdomains: true
+      })
+        .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; includeSubdomains; report-uri="http://example.com"', done)
     })
 
     it('rounds down to the nearest second', function (done) {
