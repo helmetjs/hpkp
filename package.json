@@ -27,8 +27,8 @@
     "test": "mocha"
   },
   "devDependencies": {
-    "connect": "^3.3.4",
-    "mocha": "^2.1.0",
-    "supertest": "^0.15.0"
+    "connect": "^3.4.0",
+    "mocha": "^2.3.4",
+    "supertest": "^1.1.0"
   }
 }
