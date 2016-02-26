@@ -6,7 +6,17 @@ module.exports = function hpkp (passedOptions) {
   var headerValue = getHeaderValue(options)
 
   return function hpkp (req, res, next) {
-    res.setHeader(headerKey, headerValue)
+    var setHeader = true
+    var setIf = options.setIf
+
+    if (setIf) {
+      setHeader = setIf(req, res)
+    }
+
+    if (setHeader) {
+      res.setHeader(headerKey, headerValue)
+    }
+
     next()
   }
 }
@@ -18,9 +28,13 @@ function parseOptions (options) {
 
   var maxAge = options.maxAge
   var sha256s = options.sha256s
+  var setIf = options.setIf
 
   if (!maxAge || maxAge <= 0) { throw badArgumentsError }
   if (!sha256s || sha256s.length < 2) { throw badArgumentsError }
+  if (setIf && (typeof setIf !== 'function')) {
+    throw new TypeError('setIf must be a function.')
+  }
 
   if (options.reportOnly && !options.reportUri) { throw badArgumentsError }
 
@@ -29,7 +43,8 @@ function parseOptions (options) {
     sha256s: sha256s,
     includeSubdomains: options.includeSubdomains,
     reportUri: options.reportUri,
-    reportOnly: options.reportOnly
+    reportOnly: options.reportOnly,
+    setIf: setIf
   }
 }
 
