@@ -23,8 +23,9 @@ app.use(hpkp({
   reportUri: 'http://example.com', // optional
   reportOnly: false,               // optional
 
-  // Set the header based on conditions
-  setIf: function (req, res) {      // optional
+  // Set the header based on a condition.
+  // This is optional.
+  setIf: function (req, res) {
     return req.secure
   }
 }))
