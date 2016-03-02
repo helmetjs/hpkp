@@ -20,8 +20,13 @@ app.use(hpkp({
   maxAge: ninetyDaysInMilliseconds,
   sha256s: ['AbCdEf123=', 'ZyXwVu456='],
   includeSubdomains: true,         // optional
-  reportUri: 'http://example.com'  // optional
-  reportOnly: false                // optional
+  reportUri: 'http://example.com', // optional
+  reportOnly: false,               // optional
+
+  // Set the header based on conditions
+  setIf: function (req, res) {      // optional
+    return req.secure
+  }
 }))
 ```
 

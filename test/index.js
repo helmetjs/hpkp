@@ -63,6 +63,29 @@ describe('hpkp', function () {
       test({ maxAge: 1567, sha256s: ['abc123', 'xyz456'] })
         .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=2', done)
     })
+
+    it('set the header when the condition is true', function (done) {
+      test({
+        maxAge: 10000,
+        sha256s: ['abc123', 'xyz456'],
+        setIf: function (req, res) { return true }
+      })
+        .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10', done)
+    })
+
+    it('not set the header when the condition is false', function (done) {
+      test({
+        maxAge: 10000,
+        sha256s: ['abc123', 'xyz456'],
+        setIf: function (req, res) { return false }
+      })
+        .expect(function (res) {
+          if (res.header['public-key-pins']) {
+            throw new Error('Header "Public-Key-Pins" must be absent.')
+          }
+        })
+        .end(done)
+    })
   })
 
   it('names its function and middleware', function () {
@@ -127,6 +150,12 @@ describe('hpkp', function () {
         sha256s: ['abc123', 'xyz456'],
         reportOnly: true
       }))
+    })
+
+    it('fails if called with no function', function () {
+      [123, true].forEach(function (value) {
+        assert.throws(callWith({ maxAge: 10000, sha256s: ['abc123', 'xyz456'], setIf: value }))
+      })
     })
   })
 })
