@@ -19,7 +19,7 @@ var ninetyDaysInMilliseconds = 7776000000
 app.use(hpkp({
   maxAge: ninetyDaysInMilliseconds,
   sha256s: ['AbCdEf123=', 'ZyXwVu456='],
-  includeSubdomains: true,         // optional
+  includeSubDomains: true,         // optional
   reportUri: 'http://example.com', // optional
   reportOnly: false,               // optional
 

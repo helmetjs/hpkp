@@ -41,7 +41,7 @@ function parseOptions (options) {
   return {
     maxAge: maxAge,
     sha256s: sha256s,
-    includeSubdomains: options.includeSubdomains,
+    includeSubDomains: options.includeSubDomains || options.includeSubdomains,
     reportUri: options.reportUri,
     reportOnly: options.reportOnly,
     setIf: setIf
@@ -61,8 +61,8 @@ function getHeaderValue (options) {
     return 'pin-sha256="' + sha + '"'
   })
   result.push('max-age=' + Math.round(options.maxAge / 1000))
-  if (options.includeSubdomains) {
-    result.push('includeSubdomains')
+  if (options.includeSubDomains) {
+    result.push('includeSubDomains')
   }
   if (options.reportUri) {
     result.push('report-uri="' + options.reportUri + '"')

@@ -20,9 +20,14 @@ describe('hpkp', function () {
         .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10', done)
     })
 
-    it('can include subdomains', function (done) {
+    it('can include subdomains with the includeSubdomains option', function (done) {
       test({ maxAge: 10000, sha256s: ['abc123', 'xyz456'], includeSubdomains: true })
-        .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; includeSubdomains', done)
+        .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; includeSubDomains', done)
+    })
+
+    it('can include subdomains with the includeSubDomains option', function (done) {
+      test({ maxAge: 10000, sha256s: ['abc123', 'xyz456'], includeSubDomains: true })
+        .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; includeSubDomains', done)
     })
 
     it('can set a report-uri', function (done) {
@@ -49,9 +54,9 @@ describe('hpkp', function () {
         maxAge: 10000,
         sha256s: ['abc123', 'xyz456'],
         reportUri: 'http://example.com',
-        includeSubdomains: true
+        includeSubDomains: true
       })
-        .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; includeSubdomains; report-uri="http://example.com"', done)
+        .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; includeSubDomains; report-uri="http://example.com"', done)
     })
 
     it('rounds down to the nearest second', function (done) {
