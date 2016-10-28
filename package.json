@@ -7,7 +7,7 @@
     "Tom Delmas <tdelmas@gmail.com> (https://tdelmas.ovh)"
   ],
   "description": "HTTP Public Key Pinning (HPKP) middleware",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "keywords": [
     "helmet",
     "security",
