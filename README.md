@@ -15,9 +15,9 @@ var hpkp = require('hpkp')
 
 var app = express()
 
-var ninetyDaysInMilliseconds = 7776000000
+var ninetyDaysInSeconds = 7776000
 app.use(hpkp({
-  maxAge: ninetyDaysInMilliseconds,
+  maxAge: ninetyDaysInSeconds,
   sha256s: ['AbCdEf123=', 'ZyXwVu456='],
   includeSubDomains: true,         // optional
   reportUri: 'http://example.com', // optional

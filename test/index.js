@@ -16,23 +16,23 @@ describe('hpkp', function () {
     }
 
     it('sets header with a multi-value array key called "sha256s"', function (done) {
-      test({ maxAge: 10000, sha256s: ['abc123', 'xyz456'] })
+      test({ maxAge: 10, sha256s: ['abc123', 'xyz456'] })
         .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10', done)
     })
 
     it('can include subdomains with the includeSubdomains option', function (done) {
-      test({ maxAge: 10000, sha256s: ['abc123', 'xyz456'], includeSubdomains: true })
+      test({ maxAge: 10, sha256s: ['abc123', 'xyz456'], includeSubdomains: true })
         .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; includeSubDomains', done)
     })
 
     it('can include subdomains with the includeSubDomains option', function (done) {
-      test({ maxAge: 10000, sha256s: ['abc123', 'xyz456'], includeSubDomains: true })
+      test({ maxAge: 10, sha256s: ['abc123', 'xyz456'], includeSubDomains: true })
         .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; includeSubDomains', done)
     })
 
     it('can set a report-uri', function (done) {
       test({
-        maxAge: 10000,
+        maxAge: 10,
         sha256s: ['abc123', 'xyz456'],
         reportUri: 'http://example.com'
       })
@@ -41,7 +41,7 @@ describe('hpkp', function () {
 
     it('can enable Report-Only header', function (done) {
       test({
-        maxAge: 10000,
+        maxAge: 10,
         sha256s: ['abc123', 'xyz456'],
         reportUri: 'http://example.com',
         reportOnly: true
@@ -51,7 +51,7 @@ describe('hpkp', function () {
 
     it('can use a report URI and include subdomains', function (done) {
       test({
-        maxAge: 10000,
+        maxAge: 10,
         sha256s: ['abc123', 'xyz456'],
         reportUri: 'http://example.com',
         includeSubDomains: true
@@ -60,18 +60,18 @@ describe('hpkp', function () {
     })
 
     it('rounds down to the nearest second', function (done) {
-      test({ maxAge: 1234, sha256s: ['abc123', 'xyz456'] })
+      test({ maxAge: 1.234, sha256s: ['abc123', 'xyz456'] })
         .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=1', done)
     })
 
     it('rounds up to the nearest second', function (done) {
-      test({ maxAge: 1567, sha256s: ['abc123', 'xyz456'] })
+      test({ maxAge: 1.567, sha256s: ['abc123', 'xyz456'] })
         .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=2', done)
     })
 
     it('set the header when the condition is true', function (done) {
       test({
-        maxAge: 10000,
+        maxAge: 10,
         sha256s: ['abc123', 'xyz456'],
         setIf: function (req, res) { return true }
       })
@@ -80,7 +80,7 @@ describe('hpkp', function () {
 
     it('not set the header when the condition is false', function (done) {
       test({
-        maxAge: 10000,
+        maxAge: 10,
         sha256s: ['abc123', 'xyz456'],
         setIf: function (req, res) { return false }
       })
@@ -120,7 +120,7 @@ describe('hpkp', function () {
 
     it('fails if called with a lowercase "maxage" option', function () {
       assert.throws(callWith({
-        maxage: 10000,
+        maxage: 10,
         sha256s: ['abc123', 'xyz456']
       }))
     })
@@ -133,7 +133,7 @@ describe('hpkp', function () {
         [],
         ['abc123']
       ].forEach(function (value) {
-        assert.throws(callWith({ maxAge: 10000, sha256s: value }))
+        assert.throws(callWith({ maxAge: 10, sha256s: value }))
       })
     })
 
@@ -142,16 +142,16 @@ describe('hpkp', function () {
     })
 
     it('fails if called with a negative maxAge', function () {
-      assert.throws(callWith({ maxAge: -1000, sha256s: ['abc123', 'xyz456'] }))
+      assert.throws(callWith({ maxAge: -10, sha256s: ['abc123', 'xyz456'] }))
     })
 
     it('fails if called with both types of maxAge argument', function () {
-      assert.throws(callWith({ maxAge: 1000, maxage: 1000, sha256s: ['abc123', 'xyz456'] }))
+      assert.throws(callWith({ maxAge: 10, maxage: 10, sha256s: ['abc123', 'xyz456'] }))
     })
 
     it('fails if called with reportOnly: true but no reportUri', function () {
       assert.throws(callWith({
-        maxAge: 10000,
+        maxAge: 10,
         sha256s: ['abc123', 'xyz456'],
         reportOnly: true
       }))
@@ -159,7 +159,7 @@ describe('hpkp', function () {
 
     it('fails if called with no function', function () {
       [123, true].forEach(function (value) {
-        assert.throws(callWith({ maxAge: 10000, sha256s: ['abc123', 'xyz456'], setIf: value }))
+        assert.throws(callWith({ maxAge: 10, sha256s: ['abc123', 'xyz456'], setIf: value }))
       })
     })
   })

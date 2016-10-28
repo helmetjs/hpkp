@@ -60,7 +60,7 @@ function getHeaderValue (options) {
   var result = options.sha256s.map(function (sha) {
     return 'pin-sha256="' + sha + '"'
   })
-  result.push('max-age=' + Math.round(options.maxAge / 1000))
+  result.push('max-age=' + Math.round(options.maxAge))
   if (options.includeSubDomains) {
     result.push('includeSubDomains')
   }
