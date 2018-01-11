@@ -28,10 +28,10 @@
     "test": "mocha"
   },
   "devDependencies": {
-    "connect": "^3.5.0",
-    "mocha": "^3.1.2",
-    "standard": "^8.5.0",
-    "supertest": "^2.0.1"
+    "connect": "^3.6.5",
+    "mocha": "^4.1.0",
+    "standard": "^10.0.3",
+    "supertest": "^3.0.0"
   },
   "standard": {
     "global": [
