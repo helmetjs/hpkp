@@ -15,81 +15,78 @@ describe('hpkp', function () {
       return request(app).get('/')
     }
 
-    it('sets header with a multi-value array key called "sha256s"', function (done) {
-      test({ maxAge: 10, sha256s: ['abc123', 'xyz456'] })
-        .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10', done)
+    it('sets header with a multi-value array key called "sha256s"', function () {
+      return test({ maxAge: 10, sha256s: ['abc123', 'xyz456'] })
+        .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10')
     })
 
-    it('can include subdomains with the includeSubdomains option', function (done) {
-      test({ maxAge: 10, sha256s: ['abc123', 'xyz456'], includeSubdomains: true })
-        .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; includeSubDomains', done)
+    it('can include subdomains with the includeSubdomains option', function () {
+      return test({ maxAge: 10, sha256s: ['abc123', 'xyz456'], includeSubdomains: true })
+        .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; includeSubDomains')
     })
 
-    it('can include subdomains with the includeSubDomains option', function (done) {
-      test({ maxAge: 10, sha256s: ['abc123', 'xyz456'], includeSubDomains: true })
-        .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; includeSubDomains', done)
+    it('can include subdomains with the includeSubDomains option', function () {
+      return test({ maxAge: 10, sha256s: ['abc123', 'xyz456'], includeSubDomains: true })
+        .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; includeSubDomains')
     })
 
-    it('can set a report-uri', function (done) {
-      test({
+    it('can set a report-uri', function () {
+      return test({
         maxAge: 10,
         sha256s: ['abc123', 'xyz456'],
         reportUri: 'http://example.com'
       })
-        .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; report-uri="http://example.com"', done)
+        .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; report-uri="http://example.com"')
     })
 
-    it('can enable Report-Only header', function (done) {
-      test({
+    it('can enable Report-Only header', function () {
+      return test({
         maxAge: 10,
         sha256s: ['abc123', 'xyz456'],
         reportUri: 'http://example.com',
         reportOnly: true
       })
-        .expect('Public-Key-Pins-Report-Only', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; report-uri="http://example.com"', done)
+        .expect('Public-Key-Pins-Report-Only', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; report-uri="http://example.com"')
     })
 
-    it('can use a report URI and include subdomains', function (done) {
-      test({
+    it('can use a report URI and include subdomains', function () {
+      return test({
         maxAge: 10,
         sha256s: ['abc123', 'xyz456'],
         reportUri: 'http://example.com',
         includeSubDomains: true
       })
-        .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; includeSubDomains; report-uri="http://example.com"', done)
+        .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; includeSubDomains; report-uri="http://example.com"')
     })
 
-    it('rounds down to the nearest second', function (done) {
-      test({ maxAge: 1.234, sha256s: ['abc123', 'xyz456'] })
-        .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=1', done)
+    it('rounds down to the nearest second', function () {
+      return test({ maxAge: 1.234, sha256s: ['abc123', 'xyz456'] })
+        .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=1')
     })
 
-    it('rounds up to the nearest second', function (done) {
-      test({ maxAge: 1.567, sha256s: ['abc123', 'xyz456'] })
-        .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=2', done)
+    it('rounds up to the nearest second', function () {
+      return test({ maxAge: 1.567, sha256s: ['abc123', 'xyz456'] })
+        .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=2')
     })
 
-    it('set the header when the condition is true', function (done) {
-      test({
+    it('set the header when the condition is true', function () {
+      return test({
         maxAge: 10,
         sha256s: ['abc123', 'xyz456'],
         setIf: function (req, res) { return true }
       })
-        .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10', done)
+        .expect('Public-Key-Pins', 'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10')
     })
 
-    it('not set the header when the condition is false', function (done) {
-      test({
+    it('not set the header when the condition is false', function () {
+      return test({
         maxAge: 10,
         sha256s: ['abc123', 'xyz456'],
         setIf: function (req, res) { return false }
       })
         .expect(function (res) {
-          if (res.header['public-key-pins']) {
-            throw new Error('Header "Public-Key-Pins" must be absent.')
-          }
+          assert(!('public-key-pins' in res.headers))
         })
-        .end(done)
     })
   })
 
