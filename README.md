@@ -11,12 +11,12 @@ Adds Public Key Pinning headers to Express/Connect applications. To learn more a
 Usage:
 
 ```js
-var express = require('express')
-var hpkp = require('hpkp')
+const express = require('express')
+const hpkp = require('hpkp')
 
-var app = express()
+const app = express()
 
-var ninetyDaysInSeconds = 7776000
+const ninetyDaysInSeconds = 7776000
 app.use(hpkp({
   maxAge: ninetyDaysInSeconds,
   sha256s: ['AbCdEf123=', 'ZyXwVu456='],
@@ -26,7 +26,7 @@ app.use(hpkp({
 
   // Set the header based on a condition.
   // This is optional.
-  setIf: function (req, res) {
+  setIf(req, res) {
     return req.secure
   }
 }))
