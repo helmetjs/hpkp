@@ -91,8 +91,8 @@ describe('hpkp', function () {
   })
 
   it('names its function and middleware', function () {
-    assert.equal(hpkp.name, 'hpkp')
-    assert.equal(hpkp.name, hpkp({ maxAge: 10000, sha256s: ['abc123', 'xyz456'] }).name)
+    assert.strictEqual(hpkp.name, 'hpkp')
+    assert.strictEqual(hpkp.name, hpkp({ maxAge: 10000, sha256s: ['abc123', 'xyz456'] }).name)
   })
 
   describe('with improper input', function () {
