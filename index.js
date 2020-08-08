@@ -2,7 +2,7 @@ var badArgumentsError = new Error('hpkp must be called with a maxAge and at leas
 
 module.exports = function hpkp (passedOptions) {
   var options = parseOptions(passedOptions)
-  var headerKey = getHeaderKey(options)
+  var headerName = getHeaderName(options)
   var headerValue = getHeaderValue(options)
 
   return function hpkp (req, res, next) {
@@ -14,7 +14,7 @@ module.exports = function hpkp (passedOptions) {
     }
 
     if (setHeader) {
-      res.setHeader(headerKey, headerValue)
+      res.setHeader(headerName, headerValue)
     }
 
     next()
@@ -48,7 +48,7 @@ function parseOptions (options) {
   }
 }
 
-function getHeaderKey (options) {
+function getHeaderName (options) {
   var header = 'Public-Key-Pins'
   if (options.reportOnly) {
     header += '-Report-Only'
