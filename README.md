@@ -2,13 +2,7 @@ HTTP Public Key Pinning (HPKP) middleware
 =========================================
 [![Build Status](https://travis-ci.org/helmetjs/hpkp.svg?branch=master)](https://travis-ci.org/helmetjs/hpkp)
 
-[_Looking for a changelog?_](https://github.com/helmetjs/helmet/blob/master/CHANGELOG.md)
-
-**This module will be removed from "mainline" Helmet in version 4 (see [this issue](https://github.com/helmetjs/helmet/issues/180)). This module (`hpkp`) will not receive any new feature development but will still be maintained.**
-
-**Usage of this header (and therefore this middleware) is not recommended.**
-
----
+**This header has been deprecated citing risks of misuse, and therefore is not recommeded.** This module (`hpkp`) will not receive any new feature development but will still be maintained.
 
 Adds Public Key Pinning headers to Express/Connect applications. To learn more about HPKP, check out [the spec](https://tools.ietf.org/html/rfc7469), [the article on MDN](https://developer.mozilla.org/en-US/docs/Web/Security/Public_Key_Pinning), and [this tutorial](https://timtaubert.de/blog/2014/10/http-public-key-pinning-explained/).
 
