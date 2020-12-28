@@ -23,6 +23,11 @@
     "url": "git://github.com/helmetjs/hpkp.git"
   },
   "bugs": "https://github.com/helmetjs/hpkp/issues",
+  "files": [
+    "LICENSE",
+    "README.md",
+    "index.js"
+  ],
   "scripts": {
     "pretest": "standard",
     "test": "mocha"
