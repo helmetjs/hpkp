@@ -1,5 +1,3 @@
-var badArgumentsError = new Error('hpkp must be called with a maxAge and at least two SHA-256s (one actually used and another kept as a backup).')
-
 module.exports = function hpkp (passedOptions) {
   var options = parseOptions(passedOptions)
   var headerName = getHeaderName(options)
@@ -15,6 +13,8 @@ module.exports = function hpkp (passedOptions) {
 }
 
 function parseOptions (options) {
+  var badArgumentsError = new Error('hpkp must be called with a maxAge and at least two SHA-256s (one actually used and another kept as a backup).')
+
   if (!options) { throw badArgumentsError }
 
   if (options.maxage && options.maxAge) { throw badArgumentsError }
