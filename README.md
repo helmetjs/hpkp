@@ -1,5 +1,4 @@
-HTTP Public Key Pinning (HPKP) middleware
-=========================================
+# HTTP Public Key Pinning (HPKP) middleware
 
 **This header has been deprecated citing risks of misuse, and therefore is not recommeded.** This module (`hpkp`) will not receive any new feature development but will still be maintained.
 
@@ -10,25 +9,27 @@ Adds Public Key Pinning headers to Express/Connect applications. To learn more a
 Usage:
 
 ```js
-const express = require('express')
-const hpkp = require('hpkp')
+const express = require("express");
+const hpkp = require("hpkp");
 
-const app = express()
+const app = express();
 
-const ninetyDaysInSeconds = 7776000
-app.use(hpkp({
-  maxAge: ninetyDaysInSeconds,
-  sha256s: ['AbCdEf123=', 'ZyXwVu456='],
-  includeSubDomains: true,         // optional
-  reportUri: 'http://example.com', // optional
-  reportOnly: false,               // optional
+const ninetyDaysInSeconds = 7776000;
+app.use(
+  hpkp({
+    maxAge: ninetyDaysInSeconds,
+    sha256s: ["AbCdEf123=", "ZyXwVu456="],
+    includeSubDomains: true, // optional
+    reportUri: "http://example.com", // optional
+    reportOnly: false, // optional
 
-  // Set the header based on a condition.
-  // This is optional.
-  setIf(req, res) {
-    return req.secure
-  }
-}))
+    // Set the header based on a condition.
+    // This is optional.
+    setIf(req, res) {
+      return req.secure;
+    },
+  })
+);
 ```
 
 Setting `reportOnly` to `true` will change the header from `Public-Key-Pins` to `Public-Key-Pins-Report-Only`.
