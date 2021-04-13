@@ -1,6 +1,5 @@
 HTTP Public Key Pinning (HPKP) middleware
 =========================================
-[![Build Status](https://travis-ci.org/helmetjs/hpkp.svg?branch=master)](https://travis-ci.org/helmetjs/hpkp)
 
 **This header has been deprecated citing risks of misuse, and therefore is not recommeded.** This module (`hpkp`) will not receive any new feature development but will still be maintained.
 
