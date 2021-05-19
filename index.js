@@ -1,35 +1,51 @@
-module.exports = function hpkp (passedOptions) {
-  var options = parseOptions(passedOptions)
-  var headerName = getHeaderName(options)
-  var headerValue = getHeaderValue(options)
+module.exports = function hpkp(passedOptions) {
+  var options = parseOptions(passedOptions);
+  var headerName = getHeaderName(options);
+  var headerValue = getHeaderValue(options);
 
-  return function hpkp (req, res, next) {
+  return function hpkp(req, res, next) {
     if (options.setIf(req, res)) {
-      res.setHeader(headerName, headerValue)
+      res.setHeader(headerName, headerValue);
     }
 
-    next()
-  }
-}
+    next();
+  };
+};
 
-function parseOptions (options) {
-  var badArgumentsError = new Error('hpkp must be called with a maxAge and at least two SHA-256s (one actually used and another kept as a backup).')
+function parseOptions(options) {
+  var badArgumentsError = new Error(
+    "hpkp must be called with a maxAge and at least two SHA-256s (one actually used and another kept as a backup)."
+  );
 
-  if (!options) { throw badArgumentsError }
-
-  if (options.maxage && options.maxAge) { throw badArgumentsError }
-
-  var maxAge = options.maxAge
-  var sha256s = options.sha256s
-  var setIf = options.setIf || function () { return true }
-
-  if (!maxAge || maxAge <= 0) { throw badArgumentsError }
-  if (!sha256s || sha256s.length < 2) { throw badArgumentsError }
-  if (typeof setIf !== 'function') {
-    throw new TypeError('setIf must be a function.')
+  if (!options) {
+    throw badArgumentsError;
   }
 
-  if (options.reportOnly && !options.reportUri) { throw badArgumentsError }
+  if (options.maxage && options.maxAge) {
+    throw badArgumentsError;
+  }
+
+  var maxAge = options.maxAge;
+  var sha256s = options.sha256s;
+  var setIf =
+    options.setIf ||
+    function () {
+      return true;
+    };
+
+  if (!maxAge || maxAge <= 0) {
+    throw badArgumentsError;
+  }
+  if (!sha256s || sha256s.length < 2) {
+    throw badArgumentsError;
+  }
+  if (typeof setIf !== "function") {
+    throw new TypeError("setIf must be a function.");
+  }
+
+  if (options.reportOnly && !options.reportUri) {
+    throw badArgumentsError;
+  }
 
   return {
     maxAge: maxAge,
@@ -37,28 +53,28 @@ function parseOptions (options) {
     includeSubDomains: options.includeSubDomains || options.includeSubdomains,
     reportUri: options.reportUri,
     reportOnly: options.reportOnly,
-    setIf: setIf
-  }
+    setIf: setIf,
+  };
 }
 
-function getHeaderName (options) {
-  var header = 'Public-Key-Pins'
+function getHeaderName(options) {
+  var header = "Public-Key-Pins";
   if (options.reportOnly) {
-    header += '-Report-Only'
+    header += "-Report-Only";
   }
-  return header
+  return header;
 }
 
-function getHeaderValue (options) {
+function getHeaderValue(options) {
   var result = options.sha256s.map(function (sha) {
-    return 'pin-sha256="' + sha + '"'
-  })
-  result.push('max-age=' + Math.round(options.maxAge))
+    return 'pin-sha256="' + sha + '"';
+  });
+  result.push("max-age=" + Math.round(options.maxAge));
   if (options.includeSubDomains) {
-    result.push('includeSubDomains')
+    result.push("includeSubDomains");
   }
   if (options.reportUri) {
-    result.push('report-uri="' + options.reportUri + '"')
+    result.push('report-uri="' + options.reportUri + '"');
   }
-  return result.join('; ')
+  return result.join("; ");
 }
