@@ -31,9 +31,9 @@
   "scripts": {
     "pretest": "npm run lint",
     "lint": "npm run lint:eslint && npm run lint:prettier",
-    "lint:eslint": "eslint \"**/*.js\"",
-    "lint:prettier": "prettier --check \"**/*{md,js,json}\"",
-    "format": "prettier --write \"**/*{md,js,json}\"",
+    "lint:eslint": "eslint .",
+    "lint:prettier": "prettier --check .",
+    "format": "prettier --write .",
     "test": "mocha"
   },
   "devDependencies": {
