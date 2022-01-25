@@ -7,7 +7,6 @@ module.exports = function hpkp(passedOptions) {
     if (options.setIf(req, res)) {
       res.setHeader(headerName, headerValue);
     }
-
     next();
   };
 };
@@ -17,11 +16,11 @@ function parseOptions(options) {
     "hpkp must be called with a maxAge and at least two SHA-256s (one actually used and another kept as a backup)."
   );
 
-  if (!options) {
-    throw badArgumentsError;
-  }
-
-  if (options.maxage && options.maxAge) {
+  if (
+    !options ||
+    (options.maxage && options.maxAge) ||
+    (options.reportOnly && !options.reportUri)
+  ) {
     throw badArgumentsError;
   }
 
@@ -33,18 +32,11 @@ function parseOptions(options) {
       return true;
     };
 
-  if (!maxAge || maxAge <= 0) {
-    throw badArgumentsError;
-  }
-  if (!sha256s || sha256s.length < 2) {
+  if (!maxAge || maxAge <= 0 || !sha256s || sha256s.length < 2) {
     throw badArgumentsError;
   }
   if (typeof setIf !== "function") {
     throw new TypeError("setIf must be a function.");
-  }
-
-  if (options.reportOnly && !options.reportUri) {
-    throw badArgumentsError;
   }
 
   return {
