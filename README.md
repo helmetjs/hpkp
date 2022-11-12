@@ -20,7 +20,7 @@ app.use(
     maxAge: ninetyDaysInSeconds,
     sha256s: ["AbCdEf123=", "ZyXwVu456="],
     includeSubDomains: true, // optional
-    reportUri: "http://example.com", // optional
+    reportUri: "https://example.com", // optional
     reportOnly: false, // optional
 
     // Set the header based on a condition.
