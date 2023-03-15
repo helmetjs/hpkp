@@ -106,7 +106,7 @@ describe("hpkp", function () {
       );
     });
 
-    it("not set the header when the condition is false", function () {
+    it("doesn't set the header when the condition is false", function () {
       return test({
         maxAge: 10,
         sha256s: ["abc123", "xyz456"],
