@@ -9,7 +9,6 @@
   "description": "HTTP Public Key Pinning (HPKP) middleware",
   "version": "2.0.3",
   "keywords": [
-    "helmet",
     "security",
     "express",
     "connect",
