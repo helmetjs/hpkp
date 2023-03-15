@@ -50,11 +50,11 @@ function parseOptions(options) {
 }
 
 function getHeaderName(options) {
-  var header = "Public-Key-Pins";
+  var result = "Public-Key-Pins";
   if (options.reportOnly) {
-    header += "-Report-Only";
+    result += "-Report-Only";
   }
-  return header;
+  return result;
 }
 
 function getHeaderValue(options) {
