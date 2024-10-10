@@ -28,7 +28,7 @@ app.use(
     setIf(req, res) {
       return req.secure;
     },
-  })
+  }),
 );
 ```
 

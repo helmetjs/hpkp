@@ -8,7 +8,7 @@ const test = require("node:test");
 test('sets header with a multi-value array key called "sha256s"', () => {
   return makeRequestWith({ maxAge: 10, sha256s: ["abc123", "xyz456"] }).expect(
     "Public-Key-Pins",
-    'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10'
+    'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10',
   );
 });
 
@@ -19,7 +19,7 @@ test("can include subdomains with the includeSubdomains option", () => {
     includeSubdomains: true,
   }).expect(
     "Public-Key-Pins",
-    'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; includeSubDomains'
+    'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; includeSubDomains',
   );
 });
 
@@ -30,7 +30,7 @@ test("can include subdomains with the includeSubDomains option", () => {
     includeSubDomains: true,
   }).expect(
     "Public-Key-Pins",
-    'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; includeSubDomains'
+    'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; includeSubDomains',
   );
 });
 
@@ -41,7 +41,7 @@ test("can set a report-uri", () => {
     reportUri: "http://example.com",
   }).expect(
     "Public-Key-Pins",
-    'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; report-uri="http://example.com"'
+    'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; report-uri="http://example.com"',
   );
 });
 
@@ -53,7 +53,7 @@ test("can enable Report-Only header", () => {
     reportOnly: true,
   }).expect(
     "Public-Key-Pins-Report-Only",
-    'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; report-uri="http://example.com"'
+    'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; report-uri="http://example.com"',
   );
 });
 
@@ -65,7 +65,7 @@ test("can use a report URI and include subdomains", () => {
     includeSubDomains: true,
   }).expect(
     "Public-Key-Pins",
-    'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; includeSubDomains; report-uri="http://example.com"'
+    'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10; includeSubDomains; report-uri="http://example.com"',
   );
 });
 
@@ -75,7 +75,7 @@ test("rounds down to the nearest second", () => {
     sha256s: ["abc123", "xyz456"],
   }).expect(
     "Public-Key-Pins",
-    'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=1'
+    'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=1',
   );
 });
 
@@ -85,7 +85,7 @@ test("rounds up to the nearest second", () => {
     sha256s: ["abc123", "xyz456"],
   }).expect(
     "Public-Key-Pins",
-    'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=2'
+    'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=2',
   );
 });
 
@@ -96,7 +96,7 @@ test("set the header when the condition is true", () => {
     setIf: () => true,
   }).expect(
     "Public-Key-Pins",
-    'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10'
+    'pin-sha256="abc123"; pin-sha256="xyz456"; max-age=10',
   );
 });
 
@@ -114,7 +114,7 @@ test("names its function and middleware", () => {
   assert.strictEqual(hpkp.name, "hpkp");
   assert.strictEqual(
     hpkp.name,
-    hpkp({ maxAge: 10000, sha256s: ["abc123", "xyz456"] }).name
+    hpkp({ maxAge: 10000, sha256s: ["abc123", "xyz456"] }).name,
   );
 });
 
@@ -135,7 +135,7 @@ test('fails if called with a lowercase "maxage" option', () => {
     callWith({
       maxage: 10,
       sha256s: ["abc123", "xyz456"],
-    })
+    }),
   );
 });
 
@@ -155,7 +155,7 @@ test("fails if called with a negative maxAge", () => {
 
 test("fails if called with both types of maxAge argument", () => {
   assert.throws(
-    callWith({ maxAge: 10, maxage: 10, sha256s: ["abc123", "xyz456"] })
+    callWith({ maxAge: 10, maxage: 10, sha256s: ["abc123", "xyz456"] }),
   );
 });
 
@@ -165,14 +165,14 @@ test("fails if called with reportOnly: true but no reportUri", () => {
       maxAge: 10,
       sha256s: ["abc123", "xyz456"],
       reportOnly: true,
-    })
+    }),
   );
 });
 
 test("fails if called with no function", () => {
   [123, true].forEach((value) => {
     assert.throws(
-      callWith({ maxAge: 10, sha256s: ["abc123", "xyz456"], setIf: value })
+      callWith({ maxAge: 10, sha256s: ["abc123", "xyz456"], setIf: value }),
     );
   });
 });

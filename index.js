@@ -1,7 +1,7 @@
 module.exports = function hpkp(passedOptions) {
-  var options = parseOptions(passedOptions);
-  var headerName = getHeaderName(options);
-  var headerValue = getHeaderValue(options);
+  const options = parseOptions(passedOptions);
+  const headerName = getHeaderName(options);
+  const headerValue = getHeaderValue(options);
 
   return function hpkp(req, res, next) {
     if (options.setIf(req, res)) {
@@ -12,8 +12,8 @@ module.exports = function hpkp(passedOptions) {
 };
 
 function parseOptions(options) {
-  var badArgumentsError = new Error(
-    "hpkp must be called with a maxAge and at least two SHA-256s (one actually used and another kept as a backup)."
+  const badArgumentsError = new Error(
+    "hpkp must be called with a maxAge and at least two SHA-256s (one actually used and another kept as a backup).",
   );
 
   if (
@@ -24,13 +24,13 @@ function parseOptions(options) {
     throw badArgumentsError;
   }
 
-  var maxAge = options.maxAge;
-  var sha256s = options.sha256s;
-  var setIf =
-    options.setIf ||
-    function () {
-      return true;
-    };
+  const {
+    maxAge,
+    sha256s,
+    setIf = () => true,
+    reportUri,
+    reportOnly,
+  } = options;
 
   if (!maxAge || maxAge <= 0 || !sha256s || sha256s.length < 2) {
     throw badArgumentsError;
@@ -40,33 +40,25 @@ function parseOptions(options) {
   }
 
   return {
-    maxAge: maxAge,
-    sha256s: sha256s,
+    maxAge,
+    sha256s,
     includeSubDomains: options.includeSubDomains || options.includeSubdomains,
-    reportUri: options.reportUri,
-    reportOnly: options.reportOnly,
-    setIf: setIf,
+    reportUri,
+    reportOnly,
+    setIf,
   };
 }
 
-function getHeaderName(options) {
-  var result = "Public-Key-Pins";
-  if (options.reportOnly) {
-    result += "-Report-Only";
-  }
+function getHeaderName({ reportOnly }) {
+  const result = "Public-Key-Pins";
+  if (reportOnly) return result + "-Report-Only";
   return result;
 }
 
-function getHeaderValue(options) {
-  var result = options.sha256s.map(function (sha) {
-    return 'pin-sha256="' + sha + '"';
-  });
-  result.push("max-age=" + Math.round(options.maxAge));
-  if (options.includeSubDomains) {
-    result.push("includeSubDomains");
-  }
-  if (options.reportUri) {
-    result.push('report-uri="' + options.reportUri + '"');
-  }
+function getHeaderValue({ sha256s, maxAge, includeSubDomains, reportUri }) {
+  const result = sha256s.map((sha) => 'pin-sha256="' + sha + '"');
+  result.push("max-age=" + Math.round(maxAge));
+  if (includeSubDomains) result.push("includeSubDomains");
+  if (reportUri) result.push('report-uri="' + reportUri + '"');
   return result.join("; ");
 }
