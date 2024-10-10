@@ -6,6 +6,10 @@
 
 - Remove keywords from package metadata to lessen discoverability
 
+### Removed
+
+- **Breaking:** Drop support for old Node versions. Node 18+ is now required
+
 ## 2.0.3 - 2022-01-25
 
 ### Changed

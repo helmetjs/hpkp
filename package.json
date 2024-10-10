@@ -8,6 +8,9 @@
   ],
   "description": "HTTP Public Key Pinning (HPKP) middleware",
   "version": "2.0.3",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "keywords": [
     "hpkp",
     "public key pinning"
