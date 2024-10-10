@@ -9,13 +9,8 @@
   "description": "HTTP Public Key Pinning (HPKP) middleware",
   "version": "2.0.3",
   "keywords": [
-    "security",
-    "express",
-    "connect",
-    "public-key pinning",
-    "https",
-    "cert",
-    "certificate"
+    "hpkp",
+    "public key pinning"
   ],
   "repository": {
     "type": "git",
