@@ -1,6 +1,6 @@
 # HTTP Public Key Pinning (HPKP) middleware
 
-**This header has been deprecated citing risks of misuse, and therefore is not recommeded.** This module (`hpkp`) will not receive any new feature development but will still be maintained.
+**This header has been deprecated citing risks of misuse, and therefore is not recommended.** This module (`hpkp`) will not receive any new feature development but will still be maintained.
 
 Adds Public Key Pinning headers to Express/Connect applications. To learn more about HPKP, check out [the spec](https://tools.ietf.org/html/rfc7469), [the article on MDN](https://developer.mozilla.org/en-US/docs/Web/Security/Public_Key_Pinning), and [this tutorial](https://timtaubert.de/blog/2014/10/http-public-key-pinning-explained/).
 
