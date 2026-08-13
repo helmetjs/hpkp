@@ -17,7 +17,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/helmetjs/hpkp.git"
+    "url": "https://github.com/helmetjs/hpkp.git"
   },
   "bugs": "https://github.com/helmetjs/hpkp/issues",
   "files": [
